@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>YouTube Clone - Demo (HTML + CSS)</title>
+  <style>
+    /* Reset-ish */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; color:#111}
+
+    /* Layout */
+    .app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+    header{grid-column:1/-1;display:flex;align-items:center;gap:16px;padding:10px 18px;border-bottom:1px solid #eee;background:#fff;position:sticky;top:0;z-index:10}
+
+    /* Logo */
+    .logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:18px}
+    .logo .mark{width:36px;height:24px;background:#ff0000;border-radius:4px;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+
+    /* Search */
+    .search{flex:1;display:flex;align-items:center;gap:8px}
+    .search input{flex:1;padding:10px 14px;border-radius:20px;border:1px solid #ddd;outline:none}
+    .search button{padding:10px 14px;border-radius:20px;border:1px solid #ddd;background:#f8f8f8;cursor:pointer}
+
+    /* Right actions */
+    .actions{display:flex;align-items:center;gap:12px}
+    .icon{width:36px;height:36px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center}
+
+    /* Sidebar */
+    nav.sidebar{padding:18px;border-right:1px solid #f0f0f0;background:#fff}
+    nav ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+    nav a{color:#222;text-decoration:none;padding:8px 10px;border-radius:8px;display:flex;gap:10px;align-items:center}
+    nav a:hover{background:#f6f6f6}
+
+    /* Main content */
+    main{padding:20px;background:#fbfbfb}
+    .featured{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-bottom:22px}
+    .player{background:#000;height:320px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff}
+    .player iframe, .player video{width:100%;height:100%;border-radius:8px}
+    .meta{background:#fff;border-radius:8px;padding:12px}
+
+    /* Grid of videos */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+    .card{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,0.03)}
+    .thumb{position:relative;padding-top:56.25%;background:linear-gradient(135deg,#e2e8f0,#cbd5e1)}
+    .thumb .duration{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,0.8);color:#fff;padding:4px 6px;border-radius:4px;font-size:12px}
+    .thumb .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center}
+    .thumb .play::after{content:'';display:inline-block;margin-left:4px;border-style:solid;border-width:8px 0 8px 14px;border-color:transparent transparent transparent #fff}
+
+    .card .info{display:flex;gap:10px;padding:12px}
+    .avatar{width:36px;height:36px;border-radius:50%;background:#ddd}
+    .title{font-weight:600;font-size:14px}
+    .meta-line{font-size:13px;color:#666;margin-top:6px}
+
+    /* Responsive */
+    @media (max-width:900px){.app{grid-template-columns:72px 1fr} nav.sidebar{padding:12px} .featured{grid-template-columns:1fr} .player{height:220px} }
+    @media (max-width:520px){header{padding:8px} .search input{display:none}}
+
+    /* Small utilities */
+    .muted{color:#777;font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="logo"><div class="mark">YT</div><div>MyTube</div></div>
+      <div class="search">
+        <input type="search" placeholder="Cari... (HTML + CSS demo)" aria-label="search" />
+        <button aria-label="cari">Cari</button>
+      </div>
+      <div class="actions">
+        <div class="icon" aria-hidden>🔔</div>
+        <div class="icon" aria-hidden>✉️</div>
+        <div class="icon" aria-hidden>👤</div>
+      </div>
+    </header>
+
+    <nav class="sidebar" aria-label="Navigasi utama">
+      <ul>
+        <li><a href="#">Beranda</a></li>
+        <li><a href="#">Trending</a></li>
+        <li><a href="#">Langganan</a></li>
+        <li><a href="#">Perpustakaan</a></li>
+        <li><a href="#">Riwayat</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <!-- Featured video -->
+      <section class="featured">
+        <div class="player" role="region" aria-label="Video utama">
+          <!-- Example: embedded YouTube iframe (replace src with actual video ID) -->
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <aside class="meta">
+          <h3>Judul Video Demo</h3>
+          <p class="muted">Channel Demo • 123K views • 2 hari lalu</p>
+          <p style="margin-top:10px">Deskripsi singkat video. Pada demo ini kita menggunakan HTML & CSS untuk membuat tampilan mirip YouTube: header, sidebar, player, dan grid video.</p>
+        </aside>
+      </section>
+
+      <!-- Grid of videos -->
+      <section class="grid" aria-label="Daftar video">
+        <!-- Card 1 -->
+        <article class="card">
+          <div class="thumb" role="img" aria-label="Thumbnail video 1">
+            <div class="play" aria-hidden></div>
+            <div class="duration">12:34</div>
+          </div>
+          <div class="info">
+            <div class="avatar" aria-hidden></div>
+            <div>
+              <div class="title">Belajar CSS Grid untuk Layout Responsif</div>
+              <div class="meta-line muted">CSS Academy • 45K views • 1 minggu lalu</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card">
+          <div class="thumb" role="img" aria-label="Thumbnail video 2">
+            <div class="play" aria-hidden></div>
+            <div class="duration">05:20</div>
+          </div>
+          <div class="info">
+            <div class="avatar" aria-hidden></div>
+            <div>
+              <div class="title">Trik Flexbox Cepat</div>
+              <div class="meta-line muted">UI Tips • 88K views • 3 hari lalu</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card">
+          <div class="thumb" role="img" aria-label="Thumbnail video 3">
+            <div class="play" aria-hidden></div>
+            <div class="duration">22:11</div>
+          </div>
+          <div class="info">
+            <div class="avatar" aria-hidden></div>
+            <div>
+              <div class="title">Membangun Website Full (HTML + CSS)</div>
+              <div class="meta-line muted">Dev Channel • 102K views • 2 bulan lalu</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Duplicate cards to show grid -->
+        <article class="card"><div class="thumb"><div class="play"></div><div class="duration">08:02</div></div><div class="info"><div class="avatar"></div><div><div class="title">Design System Untuk Tim</div><div class="meta-line muted">DesignHub • 12K views</div></div></div></article>
+        <article class="card"><div class="thumb"><div class="play"></div><div class="duration">03:15</div></div><div class="info"><div class="avatar"></div><div><div class="title">Animasi CSS Sederhana</div><div class="meta-line muted">Motion • 9K views</div></div></div></article>
+        <article class="card"><div class="thumb"><div class="play"></div><div class="duration">14:44</div></div><div class="info"><div class="avatar"></div><div><div class="title">Responsive Navigation</div><div class="meta-line muted">Frontend • 33K views</div></div></div></article>
+
+      </section>
+    </main>
+  </div>
+</body>
+</html>
